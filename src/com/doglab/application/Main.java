@@ -1,6 +1,7 @@
 package com.doglab.application;
 
 import java.util.Date;
+import java.util.List;
 
 import com.doglab.agenda.User;
 import com.doglab.dao.UserDAO;
@@ -8,12 +9,10 @@ import com.doglab.dao.UserDAO;
 public class Main {
 
 	public static void main(String[] args) {
-		User user = new User();
-		user.setFullname("Joao Pedro de Morais");
-		user.setNickname("JoaoZINdaPeixeira");
-		user.setEmail("joaopm@outlook.com");
-		user.setBorn(new Date());
-		UserDAO.create(user);
+		List<User> users = UserDAO.read();
+		for(User u : users) {
+			System.out.println(u.getId()+" | "+u.getFullname());
+		}
 	}
 
 }
