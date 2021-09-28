@@ -9,14 +9,17 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		for(User u : UserDAO.read()) {
+		User u = UserDAO.read(2);
+		System.out.println("Usuário: "+u.getFullname());
+		
+		/*for(User u : UserDAO.read()) {
 			System.out.println("---------------------------");
 			System.out.println("Usuário: "+u.getFullname());
 			System.out.println("ID: "+u.getId());
 			System.out.println("Email: "+u.getEmail());
 			System.out.println("Apelido: "+u.getNickname());
 			System.out.println("Data de Nascimento: "+u.getBorn());
-		}
+		}*/
 		
 		
 	}

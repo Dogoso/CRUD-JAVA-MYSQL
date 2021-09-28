@@ -86,25 +86,23 @@ public class UserDAO {
 		return users;
 	}
 
-	public static List<User> read(int id) {
-		String query = "SELECT "+id+" FROM users";
+	public static User read(int id) {
+		String query = "SELECT * FROM users WHERE id = "+id;
+		User user = new User();
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet rset = null;
-		List<User> users = new ArrayList<User>();
 		try {
 			conn = ConnectionFactory.createConnectionToMySQL();
 			pstm = (PreparedStatement) conn.prepareStatement(query);
 			rset = pstm.executeQuery();
-			while(rset.next()) {
-				User user = new User();
-				user.setId(rset.getInt("id"));
-				user.setFullname(rset.getString("full name"));
-				user.setNickname(rset.getString("nickname"));
-				user.setEmail(rset.getString("email"));
-				user.setBorn(rset.getDate("born"));
-				users.add(user);
-			}
+			rset.next();
+			user.setFullname(rset.getString(2));
+			user.setId(rset.getInt(1));
+			user.setNickname(rset.getString(3));
+			user.setEmail(rset.getString(4));
+			user.setBorn(rset.getDate(5));
+			
 			System.out.println("Select Completo!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,7 +122,7 @@ public class UserDAO {
 				e.printStackTrace();
 			}
 		}
-		return users;
+		return user;
 	}
 	
 	public static void update(String set, String id) {
