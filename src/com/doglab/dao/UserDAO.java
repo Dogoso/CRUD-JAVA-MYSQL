@@ -102,7 +102,6 @@ public class UserDAO {
 			user.setNickname(rset.getString(3));
 			user.setEmail(rset.getString(4));
 			user.setBorn(rset.getDate(5));
-			
 			System.out.println("Select Completo!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,9 +124,30 @@ public class UserDAO {
 		return user;
 	}
 	
-	public static void update(String set, String id) {
-		String query = "UPDATE users SET "+set+" WHERE id = "+id;
-		
+	public static void update(String line, String data, int id) {
+		String query = "UPDATE users SET `"+line+"` = '"+data+"' WHERE id = "+id;
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		try {
+			conn = ConnectionFactory.createConnectionToMySQL();
+			pstm = (PreparedStatement) conn.prepareStatement(query);
+			pstm.execute();
+			System.out.println("Update feito com Sucesso!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn!=null) {
+					conn.close();
+				}
+				if(pstm!=null) {
+					pstm.close();
+				}
+				System.out.println("Conexões Fechadas!");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static void delete(int id) {

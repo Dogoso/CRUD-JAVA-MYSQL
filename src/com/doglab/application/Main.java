@@ -9,19 +9,25 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		UserDAO.update("full name", "Silas Juan Santos Lago", 2);
+		
 		User u = UserDAO.read(2);
 		System.out.println("Usuário: "+u.getFullname());
+		System.out.println("ID: "+u.getId());
+		System.out.println("Email: "+u.getEmail());
+		System.out.println("Apelido: "+u.getNickname());
+		System.out.println("Data de Nascimento: "+u.getBorn());
 		
-		/*for(User u : UserDAO.read()) {
+		/*
+		for(User us : UserDAO.read()) {
 			System.out.println("---------------------------");
-			System.out.println("Usuário: "+u.getFullname());
-			System.out.println("ID: "+u.getId());
-			System.out.println("Email: "+u.getEmail());
-			System.out.println("Apelido: "+u.getNickname());
-			System.out.println("Data de Nascimento: "+u.getBorn());
-		}*/
-		
-		
+			System.out.println("Usuário: "+us.getFullname());
+			System.out.println("ID: "+us.getId());
+			System.out.println("Email: "+us.getEmail());
+			System.out.println("Apelido: "+us.getNickname());
+			System.out.println("Data de Nascimento: "+us.getBorn());
+		}
+		*/
 	}
 
 }
