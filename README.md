@@ -1,2 +1,7 @@
 # CRUD-JAVA-MYSQL
-First test with Java and MySQL!
+
+CRUD is a acronym to **C**reate, **R**ead, **U**pdate & **D**elete.
+
+This project to exactly this in the MySQL Database with Java code. Create new lines, Read all the lines or just one specific, update a line or delete the entire line.
+
+Simple and efficient.
