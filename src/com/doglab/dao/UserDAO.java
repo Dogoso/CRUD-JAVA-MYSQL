@@ -86,12 +86,76 @@ public class UserDAO {
 		return users;
 	}
 
-	public static void update() {
+	public static List<User> read(int id) {
+		String query = "SELECT "+id+" FROM users";
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		ResultSet rset = null;
+		List<User> users = new ArrayList<User>();
+		try {
+			conn = ConnectionFactory.createConnectionToMySQL();
+			pstm = (PreparedStatement) conn.prepareStatement(query);
+			rset = pstm.executeQuery();
+			while(rset.next()) {
+				User user = new User();
+				user.setId(rset.getInt("id"));
+				user.setFullname(rset.getString("full name"));
+				user.setNickname(rset.getString("nickname"));
+				user.setEmail(rset.getString("email"));
+				user.setBorn(rset.getDate("born"));
+				users.add(user);
+			}
+			System.out.println("Select Completo!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(conn!=null) {
+					conn.close();
+				}
+				if(pstm!=null) {
+					pstm.close();
+				}
+				if(rset!=null) {
+					rset.close();
+				}
+				System.out.println("Conexão Fechada!");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return users;
+	}
+	
+	public static void update(String set, String id) {
+		String query = "UPDATE users SET "+set+" WHERE id = "+id;
 		
 	}
 	
-	public static void delete() {
-		
+	public static void delete(int id) {
+		String query = "DELETE FROM users WHERE id = "+id;
+		Connection conn = null;
+		PreparedStatement pstm = null;
+		try {
+			conn = ConnectionFactory.createConnectionToMySQL();
+			pstm = (PreparedStatement) conn.prepareStatement(query);
+			pstm.execute();
+			System.out.println("Registro Deletado!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstm!=null) {
+					pstm.close();
+				}
+				if(conn!=null) {
+					conn.close();
+				}
+				System.out.println("Conexões Fechadas!");
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }
