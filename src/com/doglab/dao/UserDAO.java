@@ -124,13 +124,20 @@ public class UserDAO {
 		return user;
 	}
 	
-	public static void update(String line, String data, int id) {
-		String query = "UPDATE users SET `"+line+"` = '"+data+"' WHERE id = "+id;
+	public static void update(User user) {
+		String query = "UPDATE users "
+				+ "SET `full name` = ?, nickname = ?, email = ?, born = ?  "
+				+ "WHERE id = ?";
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		try {
 			conn = ConnectionFactory.createConnectionToMySQL();
 			pstm = (PreparedStatement) conn.prepareStatement(query);
+			pstm.setString(1, user.getFullname());
+			pstm.setString(2, user.getNickname());
+			pstm.setString(3, user.getEmail());
+			pstm.setDate(4, (Date) user.getBorn());
+			pstm.setInt(5, user.getId());
 			pstm.execute();
 			System.out.println("Update feito com Sucesso!");
 		} catch (Exception e) {
@@ -150,13 +157,14 @@ public class UserDAO {
 		}
 	}
 	
-	public static void delete(int id) {
-		String query = "DELETE FROM users WHERE id = "+id;
+	public static void delete(User user) {
+		String query = "DELETE FROM users WHERE id = ?";
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		try {
 			conn = ConnectionFactory.createConnectionToMySQL();
 			pstm = (PreparedStatement) conn.prepareStatement(query);
+			pstm.setInt(1, user.getId());
 			pstm.execute();
 			System.out.println("Registro Deletado!");
 		} catch (Exception e) {
